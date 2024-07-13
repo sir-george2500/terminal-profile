@@ -166,10 +166,9 @@ prompt_dir() {
 }
 
 # Virtualenv: current working virtualenv
-prompt_current_virtualenv() {
-  local virtualenv_path="$VIRTUAL_ENV"
-  if [[ -n $virtualenv_path ]]; then
-    prompt_segment blue black "(`basename $virtualenv_path`)"
+prompt_virtualenv() {
+  if [[ -n $VIRTUAL_ENV ]]; then
+    prompt_segment black default "(`basename $VIRTUAL_ENV`)"
   fi
 }
 
