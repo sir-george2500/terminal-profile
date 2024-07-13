@@ -166,9 +166,10 @@ prompt_dir() {
 }
 
 # Virtualenv: current working virtualenv
-prompt_virtualenv() {
-  if [[ -n $CONDA_PROMPT_MODIFIER ]]; then
-    prompt_segment black default ${CONDA_PROMPT_MODIFIER:1:-2}
+prompt_current_virtualenv() {
+  local virtualenv_path="$VIRTUAL_ENV"
+  if [[ -n $virtualenv_path ]]; then
+    prompt_segment blue black "(`basename $virtualenv_path`)"
   fi
 }
 
