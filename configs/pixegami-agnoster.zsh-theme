@@ -1,9 +1,8 @@
-# vim:ft=zsh ts=2 sw=2 sts=2
+# vim:ft=zsh ts=2 sw=2 sts=2 new
 #
 # Original agnoster's Theme - https://gist.github.com/3712874
 # A Powerline-inspired theme for ZSH
 # Pixegami: Modified some elements to suit my Python/Git heavy use.
-
 
 CURRENT_BG='NONE'
 
@@ -11,16 +10,6 @@ CURRENT_BG='NONE'
 
 () {
   local LC_ALL="" LC_CTYPE="en_US.UTF-8"
-  # NOTE: This segment separator character is correct.  In 2012, Powerline changed
-  # the code points they use for their special characters. This is the new code point.
-  # If this is not working for you, you probably have an old version of the
-  # Powerline-patched fonts installed. Download and install the new version.
-  # Do not submit PRs to change this unless you have reviewed the Powerline code point
-  # history and have new information.
-  # This is defined using a Unicode escape sequence so it is unambiguously readable, regardless of
-  # what font the user is viewing this source code in. Do not replace the
-  # escape sequence with a single literal character.
-  # Do not change this! Do not make it '\u2b80'; that is the old, wrong code point.
   SEGMENT_SEPARATOR=$'\ue0b0'
 }
 
@@ -65,7 +54,7 @@ prompt_git() {
   local PL_BRANCH_CHAR
   () {
     local LC_ALL="" LC_CTYPE="en_US.UTF-8"
-    PL_BRANCH_CHAR=$'\ue0a0'         # 
+    PL_BRANCH_CHAR=$'\ue0a0'  # 
   }
   local ref dirty mode repo_path
   repo_path=$(git rev-parse --git-dir 2>/dev/null)
@@ -76,7 +65,7 @@ prompt_git() {
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
-      prompt_segment 014 002
+      prompt_segment 002 000  # Changed to set green background and black foreground
     fi
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then
@@ -103,25 +92,24 @@ prompt_git() {
 }
 
 prompt_bzr() {
-    (( $+commands[bzr] )) || return
-    if (bzr status >/dev/null 2>&1); then
-        status_mod=`bzr status | head -n1 | grep "modified" | wc -m`
-        status_all=`bzr status | head -n1 | wc -m`
-        revision=`bzr log | head -n2 | tail -n1 | sed 's/^revno: //'`
-        if [[ $status_mod -gt 0 ]] ; then
-            prompt_segment yellow black
-            echo -n "bzr@"$revision "✚ "
-        else
-            if [[ $status_all -gt 0 ]] ; then
-                prompt_segment yellow black
-                echo -n "bzr@"$revision
-
-            else
-                prompt_segment green black
-                echo -n "bzr@"$revision
-            fi
-        fi
+  (( $+commands[bzr] )) || return
+  if (bzr status >/dev/null 2>&1); then
+    status_mod=$(bzr status | head -n1 | grep "modified" | wc -m)
+    status_all=$(bzr status | head -n1 | wc -m)
+    revision=$(bzr log | head -n2 | tail -n1 | sed 's/^revno: //')
+    if [[ $status_mod -gt 0 ]]; then
+      prompt_segment yellow black
+      echo -n "bzr@"$revision "✚ "
+    else
+      if [[ $status_all -gt 0 ]]; then
+        prompt_segment yellow black
+        echo -n "bzr@"$revision
+      else
+        prompt_segment green black
+        echo -n "bzr@"$revision
+      fi
     fi
+  fi
 }
 
 prompt_hg() {
@@ -130,15 +118,12 @@ prompt_hg() {
   if $(hg id >/dev/null 2>&1); then
     if $(hg prompt >/dev/null 2>&1); then
       if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
-        # if files are not added
         prompt_segment red white
         st='±'
       elif [[ -n $(hg prompt "{status|modified}") ]]; then
-        # if any modification
         prompt_segment yellow black
         st='±'
       else
-        # if working copy is clean
         prompt_segment green black
       fi
       echo -n $(hg prompt "☿ {rev}@{branch}") $st
@@ -187,7 +172,7 @@ prompt_status() {
 }
 
 prompt_head() {
-  echo "\r               "  # Clear prevous line
+  echo "\r               "  # Clear previous line
   echo "\r %{%F{8}%}[%64<..<%~%<<]"  # Print Dir.
 }
 

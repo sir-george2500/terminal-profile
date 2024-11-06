@@ -1,13 +1,14 @@
 # Fail on any command.
-set -eux pipefail
+set -euxo pipefail
 
 # Install Powerline for VIM.
-sudo apt install -y python3-pip
-pip3 install --user powerline-status
-sudo cp configs/.vimrc ~/.vimrc
-sudo apt install -y fonts-powerline
+sudo pacman -S python-pip
+pip3 install --user powerline-status --break-system-packages
+cp configs/.vimrc ~/.vimrc
+sudo pacman -S --noconfirm powerline-fonts
 
 # Install Patched Font
-mkdir ~/.fonts
-sudo cp -a fonts/. ~/.fonts/
+mkdir -p ~/.fonts
+cp -a fonts/. ~/.fonts/
 fc-cache -vf ~/.fonts/
+
