@@ -2,32 +2,26 @@
 
 ![terminal](./terminal_screenshot.png)
 
-This is my profile for UNIX (MacOS/Linux) terminals. For Ubuntu, I just use the default terminal
-app. For MacOS, I use [iTerm2](https://iterm2.com/).
+This is my profile for UNIX (Linux) terminals. For Arch Linux, I use the default terminal emulator in my i3-wm setup.
 
-> In the MacOS case, I have successfully installed this theme once before, but most of the terminal commands
-> will be different. You'll just have to open the `.sh` files and figure out how to adapt it to MacOS
-> until I can prepare MacOS commands.
-
-These commands were last tested on May 2022 on Ubuntu 20.
+These commands were last tested on May 2022 on Ubuntu 20, but they are adapted here for Arch Linux.
 
 # Prerequisites
 
-For the scripts to work, I think these are the bare minimum requirements.
+For the scripts to work, these are the minimum requirements.
 
 ```bash
-# Update your software repositories.
-sudo apt-get update
-sudo apt-get upgrade
+# Update your software repositories
+sudo pacman -Syu
 
-# Install Git.
-sudo apt-get install -y git
+# Install Git
+sudo pacman -S --needed git
 
-# Install Vim.
-sudo apt-get install -y vim
-```
+# Install Vim
+sudo pacman -S --needed vim
 
 # Installation
+```
 
 ### Powerline (and fonts)
 
